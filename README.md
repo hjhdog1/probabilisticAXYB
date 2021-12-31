@@ -14,7 +14,7 @@ The code is uploaded for review purpose now. The instruction and the code will b
 
 1. See the three system noise configurations presented in the paper.
 2. Calibration functions are different between noise configurations 1,2 and noise configuration 3.
-	* For noise configuration2 1 and 2, call	
+	* For noise configurations 1 and 2, call	
 		```
 		[X, Y] = solveAXYB_prob(A, B, X0, Y0, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf, step_R, step_p)
 		```
