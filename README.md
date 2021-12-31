@@ -20,7 +20,7 @@ The code is uploaded for review purpose now. The instruction and the code will b
 		```
 	* For noise configuration 3, call		
 		```
-		[X, Y] = solveAXYB_prob_noiselessA(A, B, X_prob, Y_prob, invSig_wM, invSig_pM, step_R, step_p)
+		[X, Y] = solveAXYB_prob_noiselessA(A, B, X0, Y0, invSig_wM, invSig_pM, step_R, step_p)
 		```		
 Here ``X, Y`` are the calibration results, and ``A, B`` are the measurements pairs in size of ``4 X 4 X n`` each (n is the number of meausurement pairs). ``invSig_wN, invSig_pN, invSig_wM, invSig_pM`` are the inverses of rotational and translational noise covariances of A and B, each of which is in size of ``3 X 3 X n``. ``step_R, step_p`` are stepsizes for rotation and translation, respectively.
 
