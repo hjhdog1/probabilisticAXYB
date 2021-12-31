@@ -22,7 +22,7 @@ The code is uploaded for review purpose now. The instruction and the code will b
 		```
 		[X, Y] = solveAXYB_prob_noiselessA(A, B, X_prob, Y_prob, invSig_wM, invSig_pM, step_R, step_p)
 		```		
-Here ``X, Y`` are the calibration results, and ``A, B`` are the measurements pairs in size of ``4 X 4 X n`` each (n is the number of meausurement pairs). ``invSig_wN, invSig_pN, invSig_wM, invSig_pM`` are the inverses of rotational and translational noise covariances of A and B, each of which is in size of ``3 X 3 X n``.
+Here ``X, Y`` are the calibration results, and ``A, B`` are the measurements pairs in size of ``4 X 4 X n`` each (n is the number of meausurement pairs). ``invSig_wN, invSig_pN, invSig_wM, invSig_pM`` are the inverses of rotational and translational noise covariances of A and B, each of which is in size of ``3 X 3 X n``. ``step_R, step_p`` are stepsizes for rotation and translation, respectively.
 
 ## Demos
 The demo scripts are named as ``main_fig5.m``, ``main_fig6.mm``, ..., which generate the figures in the paper.
