@@ -6,7 +6,7 @@ MATLAB implementation of Probabilistic Framework for Hand-Eye and Robot-World Ca
 
 ## Overview
 
-This is a MATLAB code of probabilistic solver for hand-eye and robot-world calibration AX = YB, of which the detailed algorithm is presented in the paper entitled "Probabilistic Framework for Hand–Eye and Robot–World Calibration AX=YB" (under review). The algorithm imcorporates different individual noise distributions of measurements A_i and B_i, and also provides calibration uncertainty as an error covariance matrix.
+This is a MATLAB code of probabilistic solver for hand-eye and robot-world calibration AX = YB, the detailed algorithm of which is presented in the paper entitled "Probabilistic Framework for Hand–Eye and Robot–World Calibration AX=YB" (under review). The algorithm incorporates different individual noise distributions of measurements A_i and B_i, and also provides calibration uncertainty as an error covariance matrix.
 
 The code is uploaded for review purpose now. The instruction and the code will be cleaned up once the paper is accepted.
 
