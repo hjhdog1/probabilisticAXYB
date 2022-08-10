@@ -10,6 +10,10 @@ This is a MATLAB code of probabilistic solver for hand-eye and robot-world calib
 
 The code is uploaded for review purpose now. The instruction and the code will be cleaned up once the paper is accepted.
 
+* Scripts to plot figures in the first and second revisions have been newly included (e.g., main_fig5_R1_R2.m)
+* This repository will only contain the pure algorithm once the paper gets accepted. The experiment codes will be moved to another repository.
+* Codes from https://github.com/ihtishamaliktk/RWHE-Calib were used in experiments. Please allow us some time to clean up codes and properly cite them.
+
 ## Instruction
 
 1. See the three system noise configurations presented in the paper.
