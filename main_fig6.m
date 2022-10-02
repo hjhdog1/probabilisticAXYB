@@ -22,6 +22,8 @@ noiseBPosition = 'none';
 
 %% Noise Parameters
 % parameters
+noiseConf = 1;
+    
 noiseLevel_SO3 = 0.05;         % rotation noise level in radian (std of the magnitude of angular displacement noise)
 noiseLevel_trans = 0.05;            % translation noise level in user's length unit (std of translation noise)
 
@@ -63,10 +65,14 @@ for i = 1:nExp
     %% Generate Synthetic Data
 
     % generate data
-    noiseAPosition = 'left';
-    noiseBPosition = 'right';
-    
-    noiseConf = 1;
+    noiseBPosition = 'right'; 
+    if noiseConf == 1
+        noiseAPosition = 'left';
+    elseif noiseConf == 2
+        noiseAPosition = 'right';
+    elseif noiseConf == 3
+        noiseAPosition = 'none';
+    end
     
     % generate data
     [A, B] = addNoiseSE3Data(A_noiseless, B_noiseless, noiseLevel_SO3, noiseLevel_trans, noiseAPosition, noiseBPosition, 'G');
@@ -81,13 +87,17 @@ for i = 1:nExp
     weight = 2.0;
     [X0,Y0] = solveAXYB_SE3(A, B, weight, param);
 
-    %% Solve with probabilistic algorithm    
-    step_R = 1e-4;
-    step_p = 1e-4;
-
-    [X{i}, Y{i}, C] = solveAXYB_prob(A, B, X0, Y0, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf, step_R, step_p);
-
-    
+    %% Solve with probabilistic algorithm
+    if noiseConf == 3
+        % probabilistic algorithm is equivalent to distance minimzation in this case
+        X{i} = X0;
+        Y{i} = Y0;
+    else
+        step_R = 1e-4;
+        step_p = 1e-4;
+        
+        [X{i}, Y{i}, C] = solveAXYB_prob(A, B, X0, Y0, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf, step_R, step_p);
+    end
     
     
     %% Display Result
@@ -121,7 +131,7 @@ max(distX_trans);
 max(distY_trans)]
 
 
-%% Plot
+%% Compute error vectors
 dX = zeros(6,nExp);
 dY = zeros(6,nExp);
 
@@ -134,51 +144,35 @@ for i = 1:nExp
     dY(:,i) = [LogSO3(errY(1:3,1:3)); errY(1:3,4)];
 end
 
-figure
-plot3(dX(1,:), dX(2,:), dX(3,:), '.')
-title('Error in rotation of X')
-axis equal
-
-figure
-plot3(dX(4,:), dX(5,:), dX(6,:), '.')
-title('Error in translation of X')
-axis equal
-
-figure
-plot3(dY(1,:), dY(2,:), dY(3,:), '.')
-title('Error in rotation of Y')
-axis equal
-
-figure
-plot3(dY(4,:), dY(5,:), dY(6,:), '.')
-title('Error in translation of Y')
-axis equal
-
-
-%% Compute uncentainty
-% compute uncertainty
-[covX,covY,Z] = computeUncertainty(X{end}, Y{end}, C, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
 
 
 %% Plot Analytic & Numeical Covariance
-close all;
-
-
-[covX_true,~,~] = computeUncertainty(X{end}, Y{end}, C, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
-
 
 % numerical covariance
 covX_n = cov(dX');
+covY_n = cov(dY');
 
 % analytic covariance
-C_true = zeros(4,4,n);
-for i = 1:n
-    C_true(:,:,i) = A_noiseless(:,:,i) * X_true;
+if noiseConf == 3
+    [covX_a,covY_a,~] = computeUncertainty_noiseConf3(X_true, Y_true, B_noiseless, invSig_wM, invSig_pM);
+    
+    % estimation of analytic covariance
+    [covX_est,covY_est,~] = computeUncertainty_noiseConf3(X{end}, Y{end}, B, invSig_wM, invSig_pM);
+else
+    C_true = zeros(4,4,n);
+    for i = 1:n
+        C_true(:,:,i) = A_noiseless(:,:,i) * X_true;
+    end
+    
+    [covX_a,covY_a,~] = computeUncertainty(X_true, Y_true, C_true, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
+    
+    % estimation of analytic covariance
+    [covX_est,covY_est,~] = computeUncertainty(X{end}, Y{end}, C, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
 end
-[covX_a,~,~] = computeUncertainty(X_true, Y_true, C_true, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
 
-% estimation of analytic covariance
-[covX_est,~,~] = computeUncertainty(X{end}, Y{end}, C, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf);
+% covX_n = covY_n;
+% covX_a = covY_a;
+% covX_est = covY_est;
 
 
 pairs = [2,3; 4,5; 2,6];

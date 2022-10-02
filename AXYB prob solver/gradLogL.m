@@ -41,7 +41,9 @@ for i = 1:n
     RC_trans = RC';
     invC = [RC_trans, -RC_trans*pC; 0,0,0,1];
     if noiseConf == 1
-        N{i} = C{i}*invX*invSE3(A{i});
+%         N{i} = C{i}*invX*invSE3(A{i});
+        RA_trans = RA';
+        N{i} = C{i}*invX*[RA_trans, -RA_trans * pA; 0,0,0,1];
 %         N{i} = A{i}*X*invC;
     elseif noiseConf == 2
         N{i} = X*invC*A{i};
