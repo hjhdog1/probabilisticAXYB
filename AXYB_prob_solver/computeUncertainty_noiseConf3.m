@@ -20,7 +20,7 @@ for i = 1:n
     
     
     Qmy(idx, 1:3) = RB';
-    Qmy(idx+3, 1:3) = -RB' * so3(pB);
+    Qmy(idx+3, 1:3) = -RB' * skew(pB);
     Qmy(idx+3, 4:6) = RB';
     
 end

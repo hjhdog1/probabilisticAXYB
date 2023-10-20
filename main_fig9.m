@@ -90,18 +90,18 @@ for i = 1:nExp
 
     
     %% Store Results
-    distX_geometric_SO3(i) = norm(so3(X_geometric(1:3,1:3) * X_true(1:3,1:3)'));
-    distY_geometric_SO3(i) = norm(so3(Y_geometric(1:3,1:3) * Y_true(1:3,1:3)'));
+    distX_geometric_SO3(i) = norm(LogSO3(X_geometric(1:3,1:3) * X_true(1:3,1:3)'));
+    distY_geometric_SO3(i) = norm(LogSO3(Y_geometric(1:3,1:3) * Y_true(1:3,1:3)'));
     distX_geometric_trans(i) = norm(X_geometric(1:3,4) - X_true(1:3,4));
     distY_geometric_trans(i) = norm(Y_geometric(1:3,4) - Y_true(1:3,4));
 
-    distX_prob_SO3(i) = norm(so3(X_prob(1:3,1:3) * X_true(1:3,1:3)'));
-    distY_prob_SO3(i) = norm(so3(Y_prob(1:3,1:3) * Y_true(1:3,1:3)'));
+    distX_prob_SO3(i) = norm(LogSO3(X_prob(1:3,1:3) * X_true(1:3,1:3)'));
+    distY_prob_SO3(i) = norm(LogSO3(Y_prob(1:3,1:3) * Y_true(1:3,1:3)'));
     distX_prob_trans(i) = norm(X_prob(1:3,4) - X_true(1:3,4));
     distY_prob_trans(i) = norm(Y_prob(1:3,4) - Y_true(1:3,4));
     
-    diffX_SO3(i) = norm(so3(X_geometric(1:3,1:3) * X_prob(1:3,1:3)'));
-    diffY_SO3(i) = norm(so3(Y_geometric(1:3,1:3) * Y_prob(1:3,1:3)'));
+    diffX_SO3(i) = norm(LogSO3(X_geometric(1:3,1:3) * X_prob(1:3,1:3)'));
+    diffY_SO3(i) = norm(LogSO3(Y_geometric(1:3,1:3) * Y_prob(1:3,1:3)'));
     diffX_trans(i) = norm(X_geometric(1:3,4) - X_prob(1:3,4));
     diffY_trans(i) = norm(Y_geometric(1:3,4) - Y_prob(1:3,4));
 
@@ -177,3 +177,46 @@ mean([diffX_SO3', diffY_SO3', diffX_trans', diffY_trans'])
 max([diffX_SO3', diffY_SO3', diffX_trans', diffY_trans']) ./ errMean(:,1)' * 100
 min([diffX_SO3', diffY_SO3', diffX_trans', diffY_trans']) ./ errMean(:,1)' * 100
 
+
+%% Plot Results 3 - Box plots
+close all
+
+titles = {'Errors in rotation of X', 'Errors in rotation of Y';...
+    'Errors in translation of X', 'Errors in translation of Y'};
+
+data = {[distX_geometric_SO3', distX_prob_SO3']*180/pi, [distY_geometric_SO3', distY_prob_SO3']*180/pi,...
+        [distX_geometric_trans', distX_prob_trans'], [distY_geometric_trans', distY_prob_trans']};
+
+figure('Position', [100, 100, 700, 500])
+% figure
+for j = 1:2     % over X and Y
+    for i = 1:2     % over rotation and translation
+        x = 1:2;
+
+        subplot(2,2,2*(j-1)+i)
+
+        bp = boxplot(data{2*(j-1)+i},'Whisker',100);
+        grid on
+
+        title(titles{j,i})
+        ax = gca();
+        if j < 2
+            ylabel('Rotational error (^o)')
+            ax.YLim = [0, 2.0];
+        else
+            ylabel('Translational error')
+            ax.YLim = [0, 0.06];
+        end
+
+%         xticklabels({'   Distance\newlineminimization', 'Proposed\newline method'})
+        xticklabels({'Dist. Min.', 'Proposed'})
+
+        pos = get(gca, 'Position');
+        pos(1) = 0.08 + 0.51*(i-1);
+        pos(2) = 0.08 + 0.51*(2-j);
+        pos(3) = 0.405;
+        pos(4) = 0.37;
+        set(gca, 'Position', pos)
+    end
+    
+end

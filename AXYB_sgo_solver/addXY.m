@@ -17,8 +17,8 @@ function XYset_new = addXY(XYset,X,Y,J)
     % return without adding if there already exists the same minimum
     for i = 1:N
         
-        wX = so3(XYset(i).X' * X);
-        wY = so3(XYset(i).Y' * Y);
+        wX = LogSO3(XYset(i).X' * X);
+        wY = LogSO3(XYset(i).Y' * Y);
         if norm([wX;wY]) < 1e-1
             
             if J < XYset(i).J

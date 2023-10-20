@@ -1,6 +1,6 @@
 %% Generate Figure 13 & 14 (Dual-camera Real Data Experiments)
 % This code runs for 10-20 hours.
-% Reduce nExp for a quicker result.
+% Reduce nExp and/or subsetSize for a quicker result.
 clc;
 clear all;
 close all;

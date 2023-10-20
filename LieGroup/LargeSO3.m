@@ -1,7 +1,7 @@
 function R = LargeSO3(w)
 
 TINY=1e-14;
-% if(size(w)==[3,1] | size(w)==[1,3])
+if(size(w)==[3,1] | size(w)==[1,3])
     theta = norm(w);
 	if ( abs(theta) < TINY ) 
         R=eye(3);
@@ -31,7 +31,6 @@ TINY=1e-14;
 %     R(1,3)=w0 * w2 * vt + t1;
 %     R(2,3)=w1 * w2 * vt - t2;
 %     R(3,3)=w2 * w2 * vt + ct;
-
-% else
-%     error('SO3(w) w is not 3 x 1')
+else
+    error('SO3(w) w is not 3 x 1')
 end

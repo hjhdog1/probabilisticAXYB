@@ -1,8 +1,8 @@
 function [t f_dot divide] = computeStepsize(lambda,P,Q,P0,Q0,X,Y,d,isExactStepsize);
     
 
-    WX = so3(d(1:3));
-    WY = so3(d(4:6));
+    WX = skew(d(1:3));
+    WY = skew(d(4:6));
 
     t = 0;
     f_dot = 0;

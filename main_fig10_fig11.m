@@ -99,13 +99,13 @@ for j = 1:nExp
 
 
         %% Store Results
-        distX_geometric_SO3(i,j) = norm(so3(X_geometric(1:3,1:3) * X_true(1:3,1:3)'));
-        distY_geometric_SO3(i,j) = norm(so3(Y_geometric(1:3,1:3) * Y_true(1:3,1:3)'));
+        distX_geometric_SO3(i,j) = norm(LogSO3(X_geometric(1:3,1:3) * X_true(1:3,1:3)'));
+        distY_geometric_SO3(i,j) = norm(LogSO3(Y_geometric(1:3,1:3) * Y_true(1:3,1:3)'));
         distX_geometric_trans(i,j) = norm(X_geometric(1:3,4) - X_true(1:3,4));
         distY_geometric_trans(i,j) = norm(Y_geometric(1:3,4) - Y_true(1:3,4));
 
-        distX_prob_SO3(i,j) = norm(so3(X_prob(1:3,1:3) * X_true(1:3,1:3)'));
-        distY_prob_SO3(i,j) = norm(so3(Y_prob(1:3,1:3) * Y_true(1:3,1:3)'));
+        distX_prob_SO3(i,j) = norm(LogSO3(X_prob(1:3,1:3) * X_true(1:3,1:3)'));
+        distY_prob_SO3(i,j) = norm(LogSO3(Y_prob(1:3,1:3) * Y_true(1:3,1:3)'));
         distX_prob_trans(i,j) = norm(X_prob(1:3,4) - X_true(1:3,4));
         distY_prob_trans(i,j) = norm(Y_prob(1:3,4) - Y_true(1:3,4));
 

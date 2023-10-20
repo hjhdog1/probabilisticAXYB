@@ -27,26 +27,26 @@ for i = 1:n
     
     if noiseConf == 1
         Qnx(idx, 1:3) = -RC;
-        Qnx(idx+3, 1:3) = -so3(pC)*RC;
+        Qnx(idx+3, 1:3) = -skew(pC)*RC;
         Qnx(idx+3, 4:6) = -RC;
 
         Qnc(idx, idx) = RC;
-        Qnc(idx+3, idx) = so3(pC)*RC;
+        Qnc(idx+3, idx) = skew(pC)*RC;
         Qnc(idx+3, idx+3) = RC;
     elseif noiseConf == 2
         Qnx(idx, 1:3) = RX;
-        Qnx(idx+3, 1:3) = so3(pX)*RX;
+        Qnx(idx+3, 1:3) = skew(pX)*RX;
         Qnx(idx+3, 4:6) = RX;
 
         Qnc(idx, idx) = -RX;
-        Qnc(idx+3, idx) = -so3(pX)*RX;
+        Qnc(idx+3, idx) = -skew(pX)*RX;
         Qnc(idx+3, idx+3) = -RX;
     else
         error('Check noise configuration.')
     end
     
     Qmy(idx, 1:3) = RC'*RY;
-    Qmy(idx+3, 1:3) = so3(RC'*(pY-pC))*RC'*RY;
+    Qmy(idx+3, 1:3) = skew(RC'*(pY-pC))*RC'*RY;
     Qmy(idx+3, 4:6) = RC'*RY;
     
     Qmc(idx, idx) = -eye(3);

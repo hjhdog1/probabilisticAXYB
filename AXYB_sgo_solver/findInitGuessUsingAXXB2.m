@@ -4,12 +4,12 @@ function [X0,Y0] = findInitGuessUsingAXXB2(A,B)
     V = zeros(3,3);
         
     for i = 1:N-1
-        a = so3(A(:,:,1)'*A(:,:,i+1));
-        b = so3(B(:,:,1)'*B(:,:,i+1));
+        a = LogSO3(A(:,:,1)'*A(:,:,i+1));
+        b = LogSO3(B(:,:,1)'*B(:,:,i+1));
         U = U + b*a';
         
-        a = so3(A(:,:,1)*A(:,:,i+1)');
-        b = so3(B(:,:,1)*B(:,:,i+1)');
+        a = LogSO3(A(:,:,1)*A(:,:,i+1)');
+        b = LogSO3(B(:,:,1)*B(:,:,i+1)');
         V = V + b*a';
     end
     

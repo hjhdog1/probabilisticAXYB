@@ -23,6 +23,7 @@ noiseBPosition = 'none';
 %% Noise Parameters
 % parameters
 noiseConf = 1;
+% noiseConf = 2;
     
 noiseLevel_SO3 = 0.05;         % rotation noise level in radian (std of the magnitude of angular displacement noise)
 noiseLevel_trans = 0.05;            % translation noise level in user's length unit (std of translation noise)
@@ -101,8 +102,8 @@ for i = 1:nExp
     
     
     %% Display Result
-    distX_SO3(i) = norm(so3(X{i}(1:3,1:3) * X_true(1:3,1:3)'));
-    distY_SO3(i) = norm(so3(Y{i}(1:3,1:3) * Y_true(1:3,1:3)'));
+    distX_SO3(i) = norm(LogSO3(X{i}(1:3,1:3) * X_true(1:3,1:3)'));
+    distY_SO3(i) = norm(LogSO3(Y{i}(1:3,1:3) * Y_true(1:3,1:3)'));
     distX_trans(i) = norm(X{i}(1:3,4) - X_true(1:3,4));
     distY_trans(i) = norm(Y{i}(1:3,4) - Y_true(1:3,4));
    
