@@ -5,7 +5,7 @@ clear all;
 close all;
 
 %% Experiment Parameters and Results
-nExp = 100;
+nExp = 10;
 
 % variables to store solutions and errors
 X_geometric = cell(nExp,4);
