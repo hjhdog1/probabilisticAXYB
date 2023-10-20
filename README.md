@@ -10,9 +10,6 @@ This is a MATLAB code of probabilistic solver for hand-eye and robot-world calib
 
 * The code has been uploaded for the published version of the paper. (10/20/2023)
 * An instruction file ``instruction.docx`` has been added. (10/20/2023)
-* Scripts to plot figures in the published version have been newly included (e.g., main_fig5_R1_R2.m)
-
-* Scripts to plot figures in the first and second revisions have been newly included (e.g., main_fig5_R1_R2.m)
 * Codes from https://github.com/ihtishamaliktk/RWHE-Calib were used in experiments. Please allow us some time to clean up the codes and properly cite them.
 
 ## Instruction
