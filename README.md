@@ -1,7 +1,7 @@
 # Probabilistic Framework for Hand-Eye and Robot-World Calibration AX = YB
 <br>
 
-MATLAB implementation of Probabilistic Framework for Hand-Eye and Robot-World Calibration AX = YB.
+MATLAB implementation of Probabilistic Framework for Hand-Eye and Robot-World Calibration AX = YB (IEEE T-RO 2023).
 
 Paper Link: https://ieeexplore.ieee.org/abstract/document/9931998
 
