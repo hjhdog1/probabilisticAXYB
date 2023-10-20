@@ -1,4 +1,4 @@
-function [X,Y,dummy,methodName] = solveAXYB_SE3(A,B,alpha,param)
+function [X,Y,dummy,methodName] = solveAXYB_sgo(A,B,alpha,param)
 % param contains method, globalOptMethod, maxIter,ftol,sampleNumPerIter
 % param.method : 1 - steepest, stepsize est
 %                2 - newton, stepsize est
@@ -10,6 +10,17 @@ function [X,Y,dummy,methodName] = solveAXYB_SE3(A,B,alpha,param)
 %                        -1 - quaternion-based
 %                        -2 - quaternion-based with genetic algorithm
 % param.sampleNumPerIter : sampling number per iteration in global optimization
+
+%% Input Parameters
+if nargin < 3
+    alpha = 2.0;                    % translation weight
+end
+
+if nargin < 4
+    param = defaultParam;           % get default solver parameters for distance min.
+end
+
+%% Initialization
 dummy = struct;
 
 N = size(A,3);

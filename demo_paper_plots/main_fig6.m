@@ -86,7 +86,7 @@ for i = 1:nExp
     %% Solve with distance-minimization algorithm for initial guess
     % Solve AX = YB with geometric stochastic global optimization
     weight = 2.0;
-    [X0,Y0] = solveAXYB_SE3(A, B, weight, param);
+    [X0,Y0] = solveAXYB_sgo(A, B, weight, param);
 
     %% Solve with probabilistic algorithm
     if noiseConf == 3

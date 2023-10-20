@@ -74,7 +74,7 @@ for j = 1:nExp
 
         %% Solve with distance-minimization algorithm
         % Solve AX = YB with geometric stochastic global optimization
-        [X_geometric1,Y_geometric1] = solveAXYB_SE3(A,B,alpha,param);
+        [X_geometric1,Y_geometric1] = solveAXYB_sgo(A,B,alpha,param);
         X_geometric = X_geometric1;
         Y_geometric = Y_geometric1;
 

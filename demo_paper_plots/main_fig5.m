@@ -5,7 +5,7 @@ clear all;
 close all;
 
 %% Experiment Parameters and Results
-nExp = 10;
+nExp = 100;
 
 % variables to store solutions and errors
 X_geometric = cell(nExp,4);
@@ -61,7 +61,7 @@ for i = 1:nExp
     
     %% Solve with distance-minimization algorithm - conf. 1: AX=YB
     % Solve AX = YB with geometric stochastic global optimization
-    [X_geometric{i,1},Y_geometric{i,1}] = solveAXYB_SE3(A,B,alpha,param);
+    [X_geometric{i,1},Y_geometric{i,1}] = solveAXYB_sgo(A,B,alpha,param);
     
 %     % Solve Li's method for same coordination
 %     [X_Li{i,1},Y_Li{i,1}] = method.li(A,B);
@@ -71,7 +71,7 @@ for i = 1:nExp
     % Solve B^-1 Y^-1 = X^-1 A^-1 with geometric stochastic global optimization
     invA = invertData(A);
     invB = invertData(B);
-    [invY_geometric,invX_geometric] = solveAXYB_SE3(invB,invA,alpha,param);
+    [invY_geometric,invX_geometric] = solveAXYB_sgo(invB,invA,alpha,param);
 
     X_geometric{i,2} = invSE3(invX_geometric);
     Y_geometric{i,2} = invSE3(invY_geometric);
@@ -84,7 +84,7 @@ for i = 1:nExp
     
     %% Solve with distance-minimization algorithm - conf. 3: B X^-1 = Y^-1 A
     % Solve B X^-1 = Y^-1 A with geometric stochastic global optimization
-    [invX_geometric,invY_geometric] = solveAXYB_SE3(B,A,alpha,param);
+    [invX_geometric,invY_geometric] = solveAXYB_sgo(B,A,alpha,param);
 
     X_geometric{i,3} = invSE3(invX_geometric);
     Y_geometric{i,3} = invSE3(invY_geometric);    
@@ -100,7 +100,7 @@ for i = 1:nExp
     % Solve A^-1 Y = X B^-1 with geometric stochastic global optimization
     invA = invertData(A);
     invB = invertData(B);
-    [Y_geometric{i,4},X_geometric{i,4}] = solveAXYB_SE3(invA,invB,alpha,param);
+    [Y_geometric{i,4},X_geometric{i,4}] = solveAXYB_sgo(invA,invB,alpha,param);
     
 %     % Solve Li's method for same coordination
 %     [Y_Li{i,4}, X_Li{i,4}] = method.li(invA,invB);
@@ -108,8 +108,8 @@ for i = 1:nExp
     
     %% Display Result
     for j = 1:4
-        distX_geometric_SO3(i,j) = norm(so3(X_geometric{i,j}(1:3,1:3) * X_true(1:3,1:3)'));
-        distY_geometric_SO3(i,j) = norm(so3(Y_geometric{i,j}(1:3,1:3) * Y_true(1:3,1:3)'));
+        distX_geometric_SO3(i,j) = norm(LogSO3(X_geometric{i,j}(1:3,1:3) * X_true(1:3,1:3)'));
+        distY_geometric_SO3(i,j) = norm(LogSO3(Y_geometric{i,j}(1:3,1:3) * Y_true(1:3,1:3)'));
         distX_geometric_trans(i,j) = norm(X_geometric{i,j}(1:3,4) - X_true(1:3,4));
         distY_geometric_trans(i,j) = norm(Y_geometric{i,j}(1:3,4) - Y_true(1:3,4));
         

@@ -66,7 +66,6 @@ for i = 1:nExp
     
     % generate data
     [A,B] = generateABData_SE3(X_true{i}, Y_true{i}, nMeas, noiseLevel_SO3, 1, noiseLevel_trans, 0.0, 'G', noiseAPosition, noiseBPosition);   % last M pairs of (A,B) are outliers.
-    [A,B] = randomSorting(A,B); % random-sorting data to mix outliers
     
     % generate inverted data
     invA = invertData(A);
@@ -90,7 +89,7 @@ for i = 1:nExp
             case 'Shah'
                 [X{i,j}, Y{i,j}] = method.HandeyeShah(A,B) ; %pose of grid relative to the camera (Hcam2grid2)
             case 'geometric'                
-                [X{i,j}, Y{i,j}] = solveAXYB_SE3(A,B,alpha,param);
+                [X{i,j}, Y{i,j}] = solveAXYB_sgo(A,B,alpha,param);
             case 'prob'    
                 Eyes = repmat(eye(3), [1,1,nMeas]);
                 invSig_wN = Eyes;

@@ -35,22 +35,22 @@ param = defaultParam;           % get default solver parameters for distance min
 
 
 % Solve with distance-minimization algorithm - conditation 1: AX=YB
-[X_geo0{1},Y_geo0{1}] = solveAXYB_SE3(A,B,alpha,param);
+[X_geo0{1},Y_geo0{1}] = solveAXYB_sgo(A,B,alpha,param);
 
 % Solve with distance-minimization algorithm - conditation 2: B^-1 Y^-1 = X^-1 A^-1
 invA = invertData(A);
 invB = invertData(B);
-[invY, invX] = solveAXYB_SE3(invB,invA,alpha,param);
+[invY, invX] = solveAXYB_sgo(invB,invA,alpha,param);
 X_geo0{2} = invSE3(invX);
 Y_geo0{2} = invSE3(invY);
 
 % Solve with distance-minimization algorithm - conditation 3: B X^-1 = Y^-1 A
-[invX,invY] = solveAXYB_SE3(B,A,alpha,param);
+[invX,invY] = solveAXYB_sgo(B,A,alpha,param);
 X_geo0{3} = invSE3(invX);
 Y_geo0{3} = invSE3(invY);
 
 % Solve with distance-minimization algorithm - conditation 4: A^-1 Y = X B^-1
-[Y_geo0{4},X_geo0{4}] = solveAXYB_SE3(invA,invB,alpha,param);
+[Y_geo0{4},X_geo0{4}] = solveAXYB_sgo(invA,invB,alpha,param);
 
 
 %% Calculating Error w.r.t. Best Solutions
@@ -82,20 +82,20 @@ for j = 1:nExp
         invB_cur = invB(:,:,idx);
         
         % Solve with distance-minimization algorithm - conf. 1: AX=YB
-        [X_geo{1}{i,j},Y_geo{1}{i,j}] = solveAXYB_SE3(A_cur,B_cur,alpha,param);
+        [X_geo{1}{i,j},Y_geo{1}{i,j}] = solveAXYB_sgo(A_cur,B_cur,alpha,param);
 
         % Solve with distance-minimization algorithm - conf. 2: B^-1 Y^-1 = X^-1 A^-1
-        [invY, invX] = solveAXYB_SE3(invB_cur,invA_cur,alpha,param);
+        [invY, invX] = solveAXYB_sgo(invB_cur,invA_cur,alpha,param);
         X_geo{2}{i,j} = invSE3(invX);
         Y_geo{2}{i,j} = invSE3(invY);
 
         % Solve with distance-minimization algorithm - conf. 3: B X^-1 = Y^-1 A
-        [invX,invY] = solveAXYB_SE3(B_cur,A_cur,alpha,param);
+        [invX,invY] = solveAXYB_sgo(B_cur,A_cur,alpha,param);
         X_geo{3}{i,j} = invSE3(invX);
         Y_geo{3}{i,j} = invSE3(invY);
 
         % Solve with distance-minimization algorithm - conf. 4: A^-1 Y = X B^-1
-        [Y_geo{4}{i,j},X_geo{4}{i,j}] = solveAXYB_SE3(invA_cur,invB_cur,alpha,param);
+        [Y_geo{4}{i,j},X_geo{4}{i,j}] = solveAXYB_sgo(invA_cur,invB_cur,alpha,param);
     end
     
     t1 = toc;

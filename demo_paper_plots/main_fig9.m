@@ -59,12 +59,11 @@ for i = 1:nExp
     
     % generate data
     [A,B] = generateABData_SE3(X_true, Y_true, n, noiseLevel_SO3, 1, noiseLevel_trans, 0.0, 'G', noiseAPosition, noiseBPosition);   % last M pairs of (A,B) are outliers.
-    [A,B] = randomSorting(A,B); % random-sorting data to mix outliers
 
 
     %% Solve with distance-minimization algorithm
     % Solve AX = YB with geometric stochastic global optimization
-    [X_geometric1,Y_geometric1] = solveAXYB_SE3(A,B,alpha,param);
+    [X_geometric1,Y_geometric1] = solveAXYB_sgo(A,B,alpha,param);
     X_geometric = X_geometric1;
     Y_geometric = Y_geometric1;
 

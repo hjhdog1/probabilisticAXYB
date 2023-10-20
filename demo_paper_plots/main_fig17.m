@@ -34,7 +34,7 @@ param = defaultParam;           % get default solver parameters for distance min
 % param.globalOptMethod = 2;      % activate stochastic global optimization
 
 % Solve AX = YB with geometric stochastic global optimization
-[X_geo0,Y_geo0] = solveAXYB_SE3(A,B,alpha,param);
+[X_geo0,Y_geo0] = solveAXYB_sgo(A,B,alpha,param);
 
 X_true = X_geo0;
 Y_true = Y_geo0;
@@ -74,7 +74,7 @@ for j = 1:nExp
         B_cur = B(:,:,idx);
         
         % solve AX=YB
-        [X_geo{i,j}, Y_geo{i,j}] = solveAXYB_SE3(A_cur, B_cur ,alpha ,param);
+        [X_geo{i,j}, Y_geo{i,j}] = solveAXYB_sgo(A_cur, B_cur ,alpha ,param);
         [X_prob{i,j}, Y_prob{i,j}, C] = solveAXYB_prob(A_cur, B_cur, X_geo{i,j}, Y_geo{i,j}, invSig_wN, invSig_pN, invSig_wM, invSig_pM, noiseConf, step_R, step_p);
     end
     
