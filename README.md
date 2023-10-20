@@ -15,7 +15,7 @@ This is a MATLAB code of probabilistic solver for hand-eye and robot-world calib
 ## Instruction
 * Please read ``instruction.docx`` for more details.
 
-1. See the three system noise configurations presented in the paper.
+1. See the three system noise configurations presented in the paper and select one that best fits your system.
 2. Calibration functions are different between noise configurations 1,2 and noise configuration 3.
 	* For noise configurations 1 and 2, call	
 		```
