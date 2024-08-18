@@ -55,5 +55,7 @@ end
 
 
 %% Print Errors
+disp('======= X error ======');
 disp(X_true - X_est)
+disp('======= Y error ======');
 disp(Y_true - Y_est)
